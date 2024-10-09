@@ -1,0 +1,32 @@
+import java.util.*;
+
+class quad {
+public static void main (String args[]){
+double a,b,c;
+Scanner s=new Scanner (System.in);
+System.out.println("Enter a,b,c");
+a=s.nextDouble();
+b=s.nextDouble();
+c=s.nextDouble();
+if(a==0){
+System.out.println("Not quadratic");
+}
+else {
+double d=b*b-4*a*c;
+if (d==0){
+double r=-b/(2*a);
+System.out.println ("Equal roots.r1=r2="+r);
+}
+else if (d>0){
+double r1=(-b+(Math.sqrt(d))/(2*a));
+double r2= (-b-(Math.sqrt(d))/(2*a));
+System.out.println("r1="+r1+" "+"r2="+r2);
+}
+else{
+System.out.println ("Roots are imaginary");
+}
+}
+System.out.println ("Aryan Navlani 1BM23CS55");
+}
+}
+
