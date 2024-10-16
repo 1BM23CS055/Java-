@@ -84,6 +84,7 @@ s1[i]=new Stud_det();
   {
    System.out.println("Student:"+(i+1));
    s1[i].display();
+System.out.println ("Aryan Navlani 1BM23CS55");
   }
  }
 }
