@@ -1,0 +1,96 @@
+import java.util.*;
+
+abstract class Shape {
+    int dimension1;
+    int dimension2;
+
+  
+    public Shape() {
+        this.dimension1 = 0;
+        this.dimension2 = 0;
+
+    }
+
+    public Shape(int dimension1, int dimension2) {
+        this.dimension1 = dimension1;
+        this.dimension2 = dimension2;
+    }
+
+    public abstract void printArea();
+
+}
+
+class Rectangle extends Shape {
+    public Rectangle(int length, int width) {
+       
+        dimension1 = length;
+        dimension2 = width;
+    }
+
+    public void printArea() {
+
+        int area = dimension1 * dimension2;
+        System.out.println("Area of Rectangle: " + area);
+
+    }
+}
+
+class Triangle extends Shape {
+    public Triangle(int base, int height) {
+    
+        dimension1 = base;
+        dimension2 = height;
+    }
+
+    public void printArea() {
+
+        double area = 0.5 * dimension1 * dimension2;
+        System.out.println("Area of Triangle: " + area);
+
+    }
+}
+
+class Circle extends Shape {
+    public Circle(int radius) {
+       
+        dimension1 = radius;
+        dimension2 = 0;
+    }
+
+    public void printArea() {
+
+        double area = Math.PI * dimension1 * dimension1;
+        System.out.println("Area of Circle: " + area);
+    }
+}
+
+ class shapearea {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter length and width for Rectangle:");
+
+        int length = scanner.nextInt();
+        int width = scanner.nextInt();
+        Shape rectangle = new Rectangle(length, width);
+        rectangle.printArea();
+
+        System.out.println("Enter base and height for Triangle:");
+
+        int base = scanner.nextInt();
+        int height = scanner.nextInt();
+        Shape triangle = new Triangle(base, height);
+        triangle.printArea();
+
+        System.out.println("Enter radius for Circle:");
+
+        int radius = scanner.nextInt();
+        Shape circle = new Circle(radius);
+        circle.printArea();
+	System.out.println ("Aryan Navlani 1BM23CS55");
+
+        scanner.close();
+
+    }
+}
