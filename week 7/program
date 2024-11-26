@@ -1,0 +1,53 @@
+class WrongAgeException extends Exception {
+    public WrongAgeException(String message) {
+        super(message);
+    }
+}
+class Father {
+    protected int age;
+    public Father(int age) throws WrongAgeException {
+        if (age < 0) {
+            throw new WrongAgeException("Age cannot be less than 0.");
+        }
+        this.age = age;
+        System.out.println("Father's age: " + this.age);
+    }
+}
+class Son extends Father {
+    private int sonAge;
+    public Son(int fatherAge, int sonAge) throws WrongAgeException {
+        super(fatherAge);
+        if (sonAge < 0) {
+            throw new WrongAgeException("Son's age cannot be less than 0.");
+        }
+        if (sonAge >= fatherAge) {
+            throw new WrongAgeException("Son's age cannot be greater than or equal to father's age.");
+        }
+        this.sonAge = sonAge;
+        System.out.println("Son's age: " + this.sonAge);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        try {
+            Father father = new Father(-5);  
+        } catch (WrongAgeException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        try {
+            Son son = new Son(40, 45); 
+        } catch (WrongAgeException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        try {
+            Son son = new Son(40, -10); 
+        } catch (WrongAgeException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        try {
+            Son son = new Son(40, 20);  
+        } catch (WrongAgeException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
