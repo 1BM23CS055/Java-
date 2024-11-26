@@ -1,0 +1,144 @@
+import java.util.Scanner;
+class Account {
+    String customerName;
+    String accountNumber;
+    double balance;
+    String accountType;
+    public Account(String customerName, String accountNumber, String accountType) {
+        this.customerName = customerName;
+        this.accountNumber = accountNumber;
+        this.accountType = accountType;
+        this.balance = 0.0; 
+    }
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: $" + amount);
+        } else {
+            System.out.println("Invalid deposit amount.");
+        }
+    }
+
+    public void displayBalance() {
+        System.out.println("Account Balance: $" + balance);
+    }
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrew: $" + amount);
+        } else {
+            System.out.println("Insufficient balance or invalid withdrawal amount.");
+        }
+    }
+}
+class CurAcct extends Account {
+    static final double MIN_BALANCE = 500.0;  
+    static final double SERVICE_CHARGE = 20.0; 
+
+    public CurAcct(String customerName, String accountNumber) {
+        super(customerName, accountNumber, "Current");
+    }
+    public void checkAndImposeServiceCharge() {
+        if (balance < MIN_BALANCE) {
+            balance -= SERVICE_CHARGE;
+            System.out.println("Balance below minimum. Service charge of $" + SERVICE_CHARGE + " imposed.");
+        }
+    }
+}
+class SavAcct extends Account {
+    static final double INTEREST_RATE = 0.05;  
+
+
+    public SavAcct(String customerName, String accountNumber) {
+        super(customerName, accountNumber, "Savings");
+    }
+
+    public void computeAndDepositInterest() {
+        double interest = balance * INTEREST_RATE;
+        balance += interest;
+        System.out.println("Interest of $" + interest + " has been added to your savings.");
+    }
+}
+public class Bank {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Account acc1 = new CurAcct("John Doe", "12345");
+        Account acc2 = new SavAcct("Jane Smith", "67890");
+        while (true) {
+            System.out.println("\n--- Bank Menu ---");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Display Balance");
+            System.out.println("4. Compute Interest (Savings Account)");
+            System.out.println("5. Check Service Charge (Current Account)");
+            System.out.println("6. Exit");
+            System.out.print("Enter choice: ");
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter account type (Current/Savings): ");
+                    String accountType = scanner.next();
+                    System.out.print("Enter deposit amount: ");
+                    double depositAmount = scanner.nextDouble();
+                    if (accountType.equalsIgnoreCase("Current")) {
+                        acc1.deposit(depositAmount);
+                    } else if (accountType.equalsIgnoreCase("Savings")) {
+                        acc2.deposit(depositAmount);
+                    } else {
+                        System.out.println("Invalid account type.");
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Enter account type (Current/Savings): ");
+                    accountType = scanner.next();
+                    System.out.print("Enter withdrawal amount: ");
+                    double withdrawalAmount = scanner.nextDouble();
+                    if (accountType.equalsIgnoreCase("Current")) {
+                        acc1.withdraw(withdrawalAmount);
+                    } else if (accountType.equalsIgnoreCase("Savings")) {
+                        acc2.withdraw(withdrawalAmount);
+                    } else {
+                        System.out.println("Invalid account type.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Enter account type (Current/Savings): ");
+                    accountType = scanner.next();
+                    if (accountType.equalsIgnoreCase("Current")) {
+                        acc1.displayBalance();
+                    } else if (accountType.equalsIgnoreCase("Savings")) {
+                        acc2.displayBalance();
+                    } else {
+                        System.out.println("Invalid account type.");
+                    }
+                    break;
+
+                case 4:
+                    if (acc2 instanceof SavAcct) {
+                        ((SavAcct) acc2).computeAndDepositInterest();
+                    } else {
+                        System.out.println("Interest can only be computed for Savings accounts.");
+                    }
+                    break;
+
+                case 5:
+                    if (acc1 instanceof CurAcct) {
+                        ((CurAcct) acc1).checkAndImposeServiceCharge();
+                    } else {
+                        System.out.println("Service charge can only be applied to Current accounts.");
+                    }
+                    break;
+
+                case 6:
+                    System.out.println("Exiting the program.");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
